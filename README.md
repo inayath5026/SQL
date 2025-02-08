@@ -69,7 +69,7 @@
 # SELECT
 
 - SELECT column1,column2,... FROM table_name; --from specific columns
-- SELECT \* FROM table_name; --from all columns
+- SELECT * FROM table_name; --from all columns
 - SELECT DISTINCT column_names FROM table_name; --returns only different values of columns
 
 # WHERE clause
@@ -80,7 +80,7 @@
 
 # OPERATORS
 
-- Arithmetic : +, -, \*, /, %
+- Arithmetic : +, -, *, /, %
 - Comparison : =, !=, >, >=, <, <=
 - Logical : AND, OR, NOT, IN, BETWEEN, LIKE, ANY, ALL
 - Bitwise : &, |
@@ -88,18 +88,18 @@
 # LIMIT
 
 - limit the number of rows to be returned
-- SELECT \* FROM table_name LIMIT 4;
-- SELECT \* FROM table_name
+- SELECT * FROM table_name LIMIT 4;
+- SELECT * FROM table_name
   WHERE city = "Hyderabad"
   LIMIT 6;
 
 # ORDER BY clause
 
 - To sort in ASC or DESC order
-- SELECT \* FROM table_name
+- SELECT * FROM table_name
   ORDER BY column_name ASC/DESC;
 
-- SELECT \* FROM student
+- SELECT * FROM student
   ORDER BY marks DESC;
 
 # AGGREGATE FUNCTIONS
@@ -154,30 +154,152 @@
 - DELETE FROM student
   WHERE marks <= 40;
 
-
 # TABLE RELATED QUERIES
 
 - ALTER column
 
- > ALTER TABLE table_name
-   ADD COLUMN column_name datatype constraint;
+> ALTER TABLE table_name
+> ADD COLUMN column_name datatype constraint;
 
 - DROP column
 
- > ALTER TABLE table_name
-   DROP COLUMN column_name;
+> ALTER TABLE table_name
+> DROP COLUMN column_name;
 
 - RENAME table
 
- > ALTER TABLE table_name
-   RENAME TO new_table_name;
+> ALTER TABLE table_name
+> RENAME TO new_table_name;
 
 - RENAME column_name
 
- > ALTER TABLE table_name
-   CHANGE COLUMN old_column_name new_column_name new_datatype new_constraint;
+> ALTER TABLE table_name
+> CHANGE COLUMN old_column_name new_column_name new_datatype new_constraint;
 
 - MODIFY column (datatype/constraint)
 
- > ALTER TABLE table_name
-   MODIFY column_name new_datatype new_constraint;
+> ALTER TABLE table_name
+> MODIFY column_name new_datatype new_constraint;
+
+# TRUNCATE
+
+- Deletes all the table data, where as DROP TABLE Deletes the whole table
+
+- TRUNCATE TABLE table_name;
+
+# JOINS
+
+- Join is used to combine rows from two or more tables, based on a related column between them.
+
+# INNER JOIN
+
+- Returns records that have matching values in both tables.
+
+- SELECT column(s)
+  FROM table_A
+  INNER JOIN table_B
+  ON table_A.column = table_B.column;
+
+- SELECT *
+  FROM student as s
+  INNER JOIN course as c
+  ON s.id = c.id;
+
+# LEFT JOIN
+
+- Returns all the records from the left table, and the matched records from the right table.
+
+- SELECT column(s)
+  FROM table_A
+  LEFT JOIN table_B
+  ON table_A.column_name = table_B.column_name;
+
+- SELECT student.id,name,course
+  FROM student
+  LEFT JOIN course
+  ON student.id = course.id;
+
+# RIGHT JOIN
+
+- Returns all the records from the right table, and the matched records from the left table.
+
+- SELECT column(s)
+  FROM table_A
+  RIGHT JOIN table_B
+  ON table_A.column_name = table_B.column_name;
+
+- SELECT student.id,name,course
+  FROM student
+  RIGHT JOIN course
+  ON student.id = course.id;
+
+# FULL JOIN
+
+- Combining both tables completely and also returns matching records from both tables.
+
+- LEFT JOIN
+  UNION
+  RIGHT JOIN;
+
+- SELECT *
+  FROM student
+  LEFT JOIN course
+  ON student.stu_id = course.stu_id
+
+  UNION
+
+  SELECT *
+  FROM student
+  RIGHT JOIN course
+  ON student.stu_id = course.stu_id;
+
+# LEFT EXCLUSIVE JOIN
+
+- SELECT *
+  FROM student
+  LEFT JOIN course
+  ON student.stu_id = course.stu_id
+  WHERE course.stu_id IS NULL
+
+# RIGHT EXCLUSIVE JOIN
+
+- SELECT *
+  FROM student
+  RIGHT JOIN course
+  ON student.stu_id = course.stu_id
+  WHERE student.stu_id IS
+
+# SELF JOIN
+
+- The table is joined with itself.
+
+- SELECT column(s)
+  FROM table_A as a
+  JOIN table_A as b
+  ON a.column_name = b.column_name;
+
+# UNION
+
+- It is used to combine the result-set of two or more SELECT statements.
+- Gives UNIQUE records.
+
+- SELECT column(s) from table_A
+  UNION 
+  SELECT column(s) from table_B;
+
+- SELECT column(s) from table_A
+  UNION ALL 
+  SELECT column(s) from table_B ; --Returns duplicate values also.
+
+# VIEWS
+
+- A view is virtual table based on the result-set of SQL statement.
+
+- CREATE VIEW view_name AS
+  SELECT column(s) FROM table_name;
+
+- CREATE VIEW view1 AS
+  SELECT roll_no, name FROM student;
+
+- SELECT * FROM view1;
+- DROP VIEW view1;
